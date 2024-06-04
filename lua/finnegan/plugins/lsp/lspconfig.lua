@@ -6,11 +6,13 @@ return {
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
-
+    local util = require("lspconfig/util")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local on_attach = function(client, bufnr)
 			print("LSP started.")
+
+      vim.filetype.add({ extension = { templ = "templ" } })
 
 			local opts = { noremap = true, silent = true }
 			--opts.bufnr = bufnr
@@ -68,7 +70,14 @@ return {
 		lspconfig["html"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+      filetypes = { "html", "templ" },
 		})
+
+    lspconfig["htmx"].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { "html", "templ" },
+    })
 
 		-- configure typescript server with plugin
 		lspconfig["tsserver"].setup({
@@ -86,6 +95,19 @@ return {
 		lspconfig["tailwindcss"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+      filetypes = { "html", "templ", "astro", "javascript", "typescript", "javascriptreact", "typescriptreact", "react" },
+      init_options = {
+        userLanguages = {
+          html = "html",
+          templ = "html",
+          astro = "html",
+          javascript = "javascript",
+          typescript = "typescript",
+          javascriptreact = "javascript",
+          typescriptreact = "typescript",
+          react = "javascript",
+        }
+      }
 		})
 
 		-- configure python server
@@ -98,7 +120,7 @@ return {
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			settings = { -- custom settings for lua
+      settings = { -- custom settings for lua
 				Lua = {
 					-- make the language server recognize "vim" global
 					diagnostics = {
@@ -114,5 +136,24 @@ return {
 				},
 			},
 		})
+
+		-- configure go server
+		lspconfig.gopls.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			cmd = { "gopls" },
+			filetypes = { "go", "gomod", "gowork", "gotmpl" },
+			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+			settings = {
+				gopls = {
+					completeUnimported = true,
+					usePlaceholders = true,
+					analyses = {
+						unusedparams = true,
+					},
+				},
+			},
+		})
+
 	end,
 }
