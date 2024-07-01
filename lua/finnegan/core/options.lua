@@ -20,17 +20,17 @@ vim.opt.expandtab = true  -- Convert tabs to spaces
 
 
 -- maximal text width
-vim.api.nvim_set_option('textwidth', 80)
+vim.api.nvim_set_option('textwidth', 500)
 
 
 -- Enable wrapping
-vim.opt.wrap = true
+vim.opt.wrap = false
 -- Enable soft line wrapping without breaking words
 vim.opt.linebreak = true
 
 
 -- Display the wrapped part of a line differently (e.g., with a prefix)
-vim.opt.showbreak = string.rep(' ', 3)  -- Use two spaces as a prefix, adjust as needed
+--vim.opt.showbreak = string.rep(' ', 3)  -- Use two spaces as a prefix, adjust as needed
 
 
 --copy with y to normalnormal  computer clipboard

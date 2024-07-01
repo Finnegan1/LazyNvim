@@ -1,6 +1,6 @@
 --change leader key to space
 vim.g.mapleader = " "
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 500
 
 --back navigation
 vim.keymap.set("n", "-", vim.cmd.Ex)
