@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   { import = "finnegan.plugins" },
   { import = "finnegan.plugins.lsp" },
+  { import = "finnegan.plugins_no_vscode", cond = (function() return not vim.g.vscode end) }
 }, {
   checker = {
     enable = true,
