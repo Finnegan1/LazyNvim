@@ -1,5 +1,5 @@
 return {
-  "github/copilot.vim",
+--"github/copilot.vim",
   "tpope/vim-fugitive",
   "wakatime/vim-wakatime",
 }
