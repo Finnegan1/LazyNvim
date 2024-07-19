@@ -36,3 +36,10 @@ vim.opt.linebreak = true
 --copy with y to normalnormal  computer clipboard
 vim.api.nvim_set_option("clipboard","unnamed")
 
+-- disable virtual text diagnostics
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+ vim.lsp.diagnostic.on_publish_diagnostics, {
+   underline = true,
+   virtual_text = false
+ }
+)
