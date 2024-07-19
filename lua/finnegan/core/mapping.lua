@@ -21,7 +21,3 @@ vim.api.nvim_set_keymap('n', 'º', ':m .+<CR>==', { noremap = true, silent = tru
 
 
 
-
-
-
-
