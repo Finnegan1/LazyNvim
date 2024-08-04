@@ -1,3 +1,8 @@
+
+
+
+
+
 return {
   "hrsh7th/nvim-cmp",
   event = "InsertEnter",
@@ -9,6 +14,7 @@ return {
     "L3MON4D3/LuaSnip", -- snippet engine -> allows to define and use snippets of code
     "saadparwaiz1/cmp_luasnip",  -- for autocompletion with LuaSnip
     "rafamadriz/friendly-snippets", -- usefull snippets
+    "kristijanhusak/vim-dadbod-completion", -- db compleation
   },
   config = function()
     local cmp = require("cmp")
@@ -48,19 +54,71 @@ return {
         ["<C-e>"] = cmp.mapping.close(),
       }),
       sources = {
-        { name = "nvim_lsp" },
-        { name = "luasnip" },
-        { name = "buffer" },
-        { name = "path" },
+        { name = "nvim_lsp", priority = 1000 },
+        { name = "luasnip", priority = 750 },
+        { name = "buffer", priority = 500 },
+        { name = "path", priority = 250 },
+        { name = "vim-dadbod-completion", priority = 700 },
       },
       formatting = {
-        format = lspkind.cmp_format({
-          with_text = false,
-          maxwidth = 50,
-          ellipsois_char = "…",
-        }),
+        format = function(entry, vim_item)
+          vim_item.menu = ({
+            rg = '[Rg]',
+            buffer = '[Buffer]',
+            nvim_lsp = '[LSP]',
+            vsnip = '[Snippet]',
+            tags = '[Tag]',
+            path = '[Path]',
+            orgmode = '[Org]',
+            ['vim-dadbod-completion'] = '[DB]',
+          })[entry.source.name]
+          return vim_item
+        end,
+      },
+--      formatting = {
+--        format = lspkind.cmp_format({
+--          with_text = false,
+--          maxwidth = 50,
+--          ellipsois_char = "…",
+--        }),
+--      },
+    
+      window = {
+        documentation = {
+          border = 'rounded',
+        },
       },
     })
+
+
+    local autocomplete_group = vim.api.nvim_create_augroup('vimrc_autocompletion', { clear = true })
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = { 'sql', 'mysql', 'plsql' },
+      callback = function()
+        cmp.setup.buffer({ sources = { { name = 'vim-dadbod-completion' } } })
+      end,
+      group = autocomplete_group,
+    })
+
+    vim.opt.wildignore = {
+      '*.o',
+      '*.obj,*~',
+      '*.git*',
+      '*.meteor*',
+      '*vim/backups*',
+      '*sass-cache*',
+      '*mypy_cache*',
+      '*__pycache__*',
+      '*cache*',
+      '*logs*',
+      '*node_modules*',
+      '**/node_modules/**',
+      '*DS_Store*',
+      '*.gem',
+      'log/**',
+      'tmp/**',
+    }
   end,
 }
+
 
