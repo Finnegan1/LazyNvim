@@ -2,12 +2,13 @@ return {
   "robitx/gp.nvim",
   config = function ()
     local conf = {
-      openai_api_key = { "pass", "LocalEnv/OpenAI" },
+--      openai_api_key = { "pass", "LocalEnv/OpenAI" },
+      openai_api_key = os.getenv("OPENAI_API_KEY"),
       providers = {
         openai = {
- 			    disable = false,
+ 			    disable = true,
  			    endpoint = "https://api.openai.com/v1/chat/completions",
- 			    -- secret = os.getenv("OPENAI_API_KEY"), 
+ 			    secret = os.getenv("OPENAI_API_KEY"),
  		    },
         copilot = {
           disable = true,
@@ -23,8 +24,8 @@ return {
  			    endpoint = "https://$URL.openai.azure.com/openai/deployments/{{model}}/chat/completions",
  			    secret = os.getenv("AZURE_API_KEY"),
  		    },
-        anthropic = { 
-          disable = true, 
+        anthropic = {
+          disable = true,
           endpoint = "https://api.anthropic.com/v1/messages",
           secret = { "pass", "LocalEnv/Anthropic" },
         },

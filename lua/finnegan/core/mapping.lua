@@ -19,5 +19,3 @@ vim.api.nvim_set_keymap('n', '∆', ':m .-2<CR>==', { noremap = true, silent = t
 -- move urrent line one down
 vim.api.nvim_set_keymap('n', 'º', ':m .+<CR>==', { noremap = true, silent = true })
 
-
-
