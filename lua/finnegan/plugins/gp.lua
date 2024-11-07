@@ -11,19 +11,14 @@ return {
  			    secret = os.getenv("OPENAI_API_KEY"),
  		    },
         copilot = {
-          disable = true,
+          disable = false,
           endpoint = "https://api.githubcopilot.com/chat/completions",
           secret = {
             "bash",
             "-c",
-            "cat ~/.config/github-copilot/hosts.json | sed -e 's/.*oauth_token...//;s/\".*//'",
+            "cat ~/.config/github-copilot/apps.json | sed -e 's/.*oauth_token...//;s/\".*//'",
           },
         },
-        azure = {
- 			    disable = true,
- 			    endpoint = "https://$URL.openai.azure.com/openai/deployments/{{model}}/chat/completions",
- 			    secret = os.getenv("AZURE_API_KEY"),
- 		    },
         anthropic = {
           disable = true,
           endpoint = "https://api.anthropic.com/v1/messages",
@@ -33,6 +28,11 @@ return {
           disable = true,
           endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{{model}}:streamGenerateContent?key={{secret}}",
           secret = { "pass", "LocalEnv/Gemini" },
+        },
+        azure = {
+          disable = true,
+          endpoint = "https://{URL}.openai.azure.com/openai/deployments/{DEPLOYMENT}/chat/completions",
+          secret = { "pass", "LocalEnv/AzureUSEast" },
         },
       }
     }
