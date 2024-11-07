@@ -35,7 +35,9 @@ return {
         operators = {},
       },
       color_overrides = {},
-      custom_highlights = {},
+      custom_highlights = {
+        LineNr = { fg = "#FFD700" }, -- Bright yellow color for line numbers
+      },
       integrations = {
         cmp = true,
         gitsigns = true,

@@ -59,6 +59,7 @@ return {
         { name = "buffer", priority = 500 },
         { name = "path", priority = 250 },
         { name = "vim-dadbod-completion", priority = 700 },
+        --{ name = "supermaven", priority = 100 },
       },
       formatting = {
         format = function(entry, vim_item)
@@ -70,6 +71,7 @@ return {
             tags = '[Tag]',
             path = '[Path]',
             orgmode = '[Org]',
+            supermaven = '[AI]',
             ['vim-dadbod-completion'] = '[DB]',
           })[entry.source.name]
           return vim_item

@@ -4,7 +4,21 @@ return {
   lazy = true,
   version = false, -- set this if you want to always pull the latest change
   opts = {
-    -- add any opts here
+    provider = 'openai',
+    auto_suggestions_provider = 'copilot',
+    openai = {
+      endpoint = "https://api.openai.com/v1/",
+      model = "gpt-4o",
+      temperature = 0,
+      max_tokens = 16384,
+    },
+    behaviour = {
+      auto_suggestions = false, -- Experimental stage
+      auto_set_highlight_group = true,
+      auto_set_keymaps = true,
+      auto_apply_diff_after_generation = false,
+      support_paste_from_clipboard = false,
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = "make",
