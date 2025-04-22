@@ -3,8 +3,27 @@ return {
   name = "catppuccin",
   priority = 1000,
   config = function()
+    -- Function to detect system theme (macOS)
+    local function get_macos_theme()
+      local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
+      if not handle then return "light" end
+      
+      local result = handle:read("*a")
+      handle:close()
+      
+      if result:match("Dark") then
+        return "dark"
+      else
+        return "light"
+      end
+    end
+    
+    -- Get the current system theme
+    local system_theme = get_macos_theme()
+    local flavor = system_theme == "dark" and "mocha" or "latte"
+    
     require("catppuccin").setup({
-      flavour = "mocha", -- latte, frappe, macchiato, mocha
+      flavour = flavor, -- Set based on system theme
       background = { -- :h background
         light = "latte",
         dark = "mocha",
@@ -53,6 +72,18 @@ return {
     })
 
     vim.cmd([[colorscheme catppuccin]])
+    
+    -- Set up autocmd to check for system theme changes
+    -- This will check when Neovim gains focus
+    vim.api.nvim_create_autocmd("FocusGained", {
+      callback = function()
+        local new_theme = get_macos_theme()
+        if new_theme ~= system_theme then
+          system_theme = new_theme
+          vim.cmd("colorscheme catppuccin-" .. (system_theme == "dark" and "frappe" or "latte"))
+        end
+      end,
+    })
   end,
 }
 
