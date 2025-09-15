@@ -43,3 +43,10 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
    virtual_text = false
  }
 )
+
+-- Swap file and buffer handling to prevent E325 attention errors
+vim.opt.swapfile = false      -- Disable swap files completely
+vim.opt.backup = false        -- Disable backup files
+vim.opt.writebackup = false   -- Disable writebackup
+vim.opt.autoread = true       -- Automatically read files when changed outside Neovim
+vim.opt.autowrite = true      -- Automatically write files when switching buffers

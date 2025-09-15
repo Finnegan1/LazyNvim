@@ -1,4 +1,3 @@
-
 -- GP (AI)
 require("which-key").add({
     -- VISUAL mode mappings
@@ -106,49 +105,6 @@ require("which-key").add({
         { "<C-g>wv", "<cmd>GpWhisperVnew<cr>", desc = "Whisper Vnew" },
         { "<C-g>ww", "<cmd>GpWhisper<cr>", desc = "Whisper" },
         { "<C-g>x", "<cmd>GpContext<cr>", desc = "Toggle GpContext" },
-    },
-})
-
-
--- harpoon
-local harpoon = require("harpoon")
-local conf = require("telescope.config").values
-local function toggle_harpoon_telescope(harpoon_files)
-  local file_paths = {}
-  for _, item in ipairs(harpoon_files.items) do
-      table.insert(file_paths, item.value)
-  end
-  require("telescope.pickers").new({}, {
-    prompt_title = "Harpoon",
-    finder = require("telescope.finders").new_table({
-      results = file_paths,
-    }),
-    previewer = conf.file_previewer({}),
-    sorter = conf.generic_sorter({}),
-  }):find()
-end
-require("which-key").add({
-    -- NORMAL mode mappings for Harpoon
-    {
-        mode = { "n" },
-        nowait = true,
-        remap = false,
-        { "<leader>ha", function() harpoon:list():add() end, desc = 'Add to Harpoon list' },
-        { "<leader>hv", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = 'Toggle Harpoon Menu' },
-        { "<leader>hs", function() toggle_harpoon_telescope(harpoon:list()) end, desc = "Search in Harpoon List" },
-        { "<leader>h1", function() harpoon:list():select(1) end, desc = 'Select 1st Harpoon file' },
-        { "<leader>h2", function() harpoon:list():select(2) end, desc = 'Select 2nd Harpoon file' },
-        { "<leader>h3", function() harpoon:list():select(3) end, desc = 'Select 3rd Harpoon file' },
-        { "<leader>h4", function() harpoon:list():select(4) end, desc = 'Select 4th Harpoon file' },
-
-        -- Toggle previous & next buffers stored within Harpoon list
-        { "<leader>hh", function() harpoon:list():prev() end, desc = 'Previous Harpoon buffer' },
-        { "<leader>hl", function() harpoon:list():next() end, desc = 'Next Harpoon buffer' },
-
-        -- Terminal
-        --{ "<leader>ht1", function() require("harpoon.term").gotoTerminal(1) end, desc = 'GoTo Terminal One' },
-        --{ "<leader>ht2", function() require("harpoon.term").gotoTerminal(2) end, desc = 'GoTo Terminal Two' },
-        --{ "<leader>ht3", function() require("harpoon.term").gotoTerminal(3) end, desc = 'GoTo Terminal Three' },
     },
 })
 
